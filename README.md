@@ -1,1 +1,3 @@
-#MMPlayer\n\nVideoPlayer for VideoWalls at de shops.
+#MMPlayer
+
+VideoPlayer for VideoWalls at de shops.
