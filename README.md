@@ -1,3 +1,3 @@
 #MMPlayer
 
-VideoPlayer for VideoWalls at de shops.
+VideoPlayer for videowalls at retail spaces.
