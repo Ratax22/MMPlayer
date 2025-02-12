@@ -79,10 +79,6 @@ async function loadFileList() {
         const files = await response.json();
         fileList.innerHTML = '';
 
-        // Cargar settings
-        const settingsResponse = await fetch('get_settings.php');
-        const settings = await settingsResponse.json();
-
         files.forEach(file => {
             const li = document.createElement('li');
             li.textContent = file;
@@ -92,7 +88,7 @@ async function loadFileList() {
             rotationInput.type = 'number';
             rotationInput.min = '0';
             rotationInput.max = '360';
-            rotationInput.value = settings[file]?.rotation || 0;
+            rotationInput.value = '0';
             rotationInput.placeholder = 'Rotación (0-360)';
 
             const scaleXInput = document.createElement('input');
@@ -100,7 +96,7 @@ async function loadFileList() {
             scaleXInput.min = '-2.0';
             scaleXInput.max = '2.0';
             scaleXInput.step = '0.1';
-            scaleXInput.value = settings[file]?.scaleX || 0;
+            scaleXInput.value = '0';
             scaleXInput.placeholder = 'Escala X (-2.0 a 2.0)';
 
             const scaleYInput = document.createElement('input');
@@ -108,7 +104,7 @@ async function loadFileList() {
             scaleYInput.min = '-2.0';
             scaleYInput.max = '2.0';
             scaleYInput.step = '0.1';
-            scaleYInput.value = settings[file]?.scaleY || 0;
+            scaleYInput.value = '0';
             scaleYInput.placeholder = 'Escala Y (-2.0 a 2.0)';
 
             // Botón de confirmación

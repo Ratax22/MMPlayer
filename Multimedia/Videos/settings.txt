@@ -1,0 +1,1 @@
+{"5532773-uhd_2732_144025fps.mp4":{"rotation":0,"scaleX":0,"scaleY":0},"5752729.mp4":{"rotation":"90","scaleX":"-0.9","scaleY":"0"},"big_buck_bunny_720p_1mb.mp4":{"rotation":0,"scaleX":0,"scaleY":0},"700_F_258757051.mp4":{"rotation":0,"scaleX":0,"scaleY":0}}

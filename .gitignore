@@ -1,5 +1,7 @@
 #Archivos de video
-Multimedia/Videos/*.*
+Multimedia/Videos/*.mp4
+Multimedia/Videos/*.webm
+Multimedia/Videos/*.ogg
 #Archivos de ffmpeg
 admin/ffmpeg/bin/*.*
 admin/ffmpeg/doc/*.*

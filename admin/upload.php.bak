@@ -49,16 +49,6 @@ foreach ($_FILES['files']['tmp_name'] as $index => $tmpName) {
     unlink($uploadFile);
     rename($optimizedFile, $uploadFile);
 
-    // Guardar valores por defecto en settings.txt
-    $settingsFile = $uploadDir . 'settings.txt';
-    $settings = file_exists($settingsFile) ? json_decode(file_get_contents($settingsFile), true) : [];
-    $settings[$fileName] = [
-        'rotation' => 0,
-        'scaleX' => 0,
-        'scaleY' => 0,
-    ];
-    file_put_contents($settingsFile, json_encode($settings));
-
     $output .= "Video ".$fileName." subido y optimizado correctamente.\n";
     $successCount++;
 }
