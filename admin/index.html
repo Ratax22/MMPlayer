@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador de Videos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Administrador de Videos</h1>
+
+        <!-- Sección para subir archivos -->
+        <div class="upload-section">
+            <h2>Subir Nuevos Videos</h2>
+            <input type="file" id="fileInput" accept="video/*" multiple>
+            <button id="uploadButton">Subir Videos</button>
+            <p id="uploadStatus"></p>
+        </div>
+
+        <!-- Sección para mostrar el estado del proceso -->
+        <div id="processStatus" class="process-status">
+            <span id="statusMessage"></span>
+            <button id="toggleOutputButton">Mostrar Output</button>
+        </div>
+
+        <!-- Sección para mostrar el output del comando FFmpeg -->
+        <div id="outputDiv" class="output-section" style="display: none;">
+            <pre id="outputContent"></pre>
+        </div>
+
+        <!-- Sección para listar y eliminar archivos -->
+        <div class="file-list-section">
+            <h2>Videos Existentes</h2>
+            <ul id="fileList"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

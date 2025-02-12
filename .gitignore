@@ -1,0 +1,7 @@
+#Archivos de video
+Multimedia/Videos/*.*
+#Archivos de ffmpeg
+admin/ffmpeg/bin/*.*
+admin/ffmpeg/doc/*.*
+admin/ffmpeg/presets/*.*
+

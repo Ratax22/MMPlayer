@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.upload-section {
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#uploadStatus {
+    margin-top: 10px;
+    color: #333;
+}
+
+.file-list-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.file-list-section li {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-list-section li button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.file-list-section li button:hover {
+    background-color: #c82333;
+}
+
+.output-section {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    display: none; /* Oculto por defecto */
+}
+
+.output-section pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
+    font-size: 14px;
+    color: #333;
+    max-height: 200px; /* Altura máxima del output */
+    overflow-y: auto; /* Scroll si el contenido es muy largo */
+}
+
+.output-section.expanded pre {
+    max-height: 500px; /* Mostrar todo el contenido */
+}
+
+.output-section.success {
+    border-color: #28a745; /* Borde verde si la optimización fue correcta */
+}
+
+.output-section.error {
+    border-color: #ffa500; /* Borde naranja si hubo un error */
+}
+
+#toggleOutputButton {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#toggleOutputButton:hover {
+    background-color: #0056b3;
+}
+
+.process-status {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.process-status.success {
+    border-color: #28a745; /* Borde verde si el proceso fue exitoso */
+}
+
+.process-status.error {
+    border-color: #ffa500; /* Borde naranja si hubo errores */
+}
+
+#statusMessage {
+    font-weight: bold;
+}
+
