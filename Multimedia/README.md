@@ -1,0 +1,1 @@
+Folder for multimedia content.
