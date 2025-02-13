@@ -175,3 +175,54 @@ async function saveSettings(filename, rotation, scaleX, scaleY) {
         }
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cleanCacheButton = document.getElementById('cleanCacheButton');
+
+    // Cargar el estado de CleanCache al iniciar
+    loadCleanCacheState();
+
+    // Función para cargar el estado de CleanCache
+    async function loadCleanCacheState() {
+        try {
+            const response = await fetch('get_settings.php');
+            if (!response.ok) throw new Error('Error al cargar los ajustes');
+            const settings = await response.json();
+            const cleanCache = settings.CleanCache || 0;
+
+            // Actualizar el botón
+            cleanCacheButton.classList.toggle('active', cleanCache === 1);
+        } catch (error) {
+            console.error('Error al cargar el estado de CleanCache:', error);
+        }
+    }
+
+    // Función para actualizar el valor de CleanCache
+    async function updateCleanCache(value) {
+        try {
+            const response = await fetch('update_clean_cache.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ CleanCache: value }),
+            });
+
+            if (!response.ok) throw new Error('Error al actualizar CleanCache');
+
+            const result = await response.json();
+            console.log(result.message);
+
+            // Actualizar el botón
+            cleanCacheButton.classList.toggle('active', value === 1);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // Evento para el botón de limpiar caché
+    cleanCacheButton.addEventListener('click', () => {
+        const newValue = cleanCacheButton.classList.contains('active') ? 0 : 1;
+        updateCleanCache(newValue);
+    });
+});

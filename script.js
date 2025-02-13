@@ -10,6 +10,78 @@ document.addEventListener('DOMContentLoaded', () => {
     let db;
     let playlist = []; // Almacena la playlist actual
     let currentVideoIndex = 0;
+    let settings = {}; // Almacena los ajustes de los videos
+
+    // Función para cargar los ajustes desde settings.txt
+    async function loadSettings() {
+        try {
+            const response = await fetch('Multimedia/Videos/settings.txt');
+            if (!response.ok) throw new Error('Error al cargar los ajustes');
+            const data = await response.text();
+            settings = JSON.parse(data);
+            console.log('Ajustes cargados:', settings);
+
+            // Verificar si CleanCache está activo
+            if (settings.CleanCache === 1) {
+                console.log('Limpiando caché del navegador...');
+                await clearBrowserCache();
+                settings.CleanCache = 0; // Restablecer el valor
+                await updateSettings(); // Guardar los cambios
+            }
+        } catch (error) {
+            console.error('Error al cargar los ajustes:', error);
+            settings = {};
+        }
+    }
+
+    // Función para limpiar la caché del navegador
+    async function clearBrowserCache() {
+        try {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.clear();
+
+            request.onsuccess = () => console.log('Caché del navegador limpiada');
+            request.onerror = () => console.error('Error al limpiar la caché');
+        } catch (error) {
+            console.error('Error al limpiar la caché:', error);
+        }
+    }
+
+    // Función para actualizar settings.txt
+    async function updateSettings() {
+        try {
+            const response = await fetch('update_clean_cache.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(settings),
+            });
+
+            if (!response.ok) throw new Error('Error al actualizar los ajustes');
+            console.log('Ajustes actualizados correctamente');
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // Resto del código del reproductor...
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const player = new Plyr('#player', {
+        fullscreen: { enabled: true, iosNative: true },
+        controls: [],
+        autoplay: true,
+    });
+
+    const dbName = 'VideoPlayerDB';
+    const storeName = 'videos';
+    let db;
+    let playlist = []; // Almacena la playlist actual
+    let currentVideoIndex = 0;
+    let settings = {}; // Almacena los ajustes de los videos
 
     // Conectar al servidor WebSocket
     const socket = new WebSocket('ws://localhost:8080');
@@ -54,6 +126,36 @@ document.addEventListener('DOMContentLoaded', () => {
     request.onerror = (event) => {
         console.error('Error al abrir IndexedDB:', event.target.error);
     };
+
+    // Función para cargar los ajustes desde settings.txt
+    async function loadSettings() {
+        try {
+            const response = await fetch('Multimedia/Videos/settings.txt');
+            if (!response.ok) throw new Error('Error al cargar los ajustes');
+            const data = await response.text();
+            settings = JSON.parse(data);
+            console.log('Ajustes cargados:', settings);
+        } catch (error) {
+            console.error('Error al cargar los ajustes:', error);
+            settings = {};
+        }
+    }
+
+    // Función para aplicar transformaciones CSS al video
+    function applyVideoTransformations(videoName) {
+        const videoElement = document.querySelector('#player');
+        if (!videoElement) return;
+
+        const videoSettings = settings[videoName] || { rotation: 0, scaleX: 0, scaleY: 0 };
+
+        // Aplicar transformaciones CSS
+        videoElement.style.transform = `
+            rotate(${videoSettings.rotation}deg)
+            scaleX(${1 + parseFloat(videoSettings.scaleX)})
+            scaleY(${1 + parseFloat(videoSettings.scaleY)})
+        `;
+        console.log(`Transformaciones aplicadas al video: ${videoName}`);
+    }
 
     // Función para guardar un video en IndexedDB
     function saveVideoToDB(name, blob) {
@@ -147,11 +249,15 @@ document.addEventListener('DOMContentLoaded', () => {
         videoElement.src = videoUrl;
         videoElement.play();
 
+        // Aplicar transformaciones CSS al video
+        applyVideoTransformations(videoName);
+
         console.log(`Video cargado y reproduciendo: ${videoName}`);
     }
 
     // Función para inicializar el reproductor
     async function initPlayer() {
+        await loadSettings(); // Cargar los ajustes de los videos
         await loadPlaylist();
         if (playlist.length === 0) return;
 

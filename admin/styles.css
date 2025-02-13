@@ -158,3 +158,17 @@ button:hover {
 .file-list-section li button:hover {
     background-color: #0056b3;
 }
+
+.clean-cache-button {
+    padding: 10px 20px;
+    background-color: #dc3545; /* Rojo por defecto */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.clean-cache-button.active {
+    background-color: #28a745; /* Verde cuando está activo */
+}
